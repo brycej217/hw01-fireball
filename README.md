@@ -46,7 +46,7 @@ Choose one of the following options:
 ## Submission
 1. Create a pull request to this repository with your completed code.
 2. Update README.md to contain a solid description of your project with a screenshot of some visuals, and a link to your live demo.
-3. Submit the link to your pull request on Gradescope, and add a comment to your submission with a hyperlink to your live demo.
+3. Submit the link to your pull request on Canvas, and add a comment to your submission with a hyperlink to your live demo.
 4. Include a link to your live site.
 
 ## Resources
