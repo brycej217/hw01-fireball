@@ -29,6 +29,12 @@ class ShaderProgram {
   unifModelInvTr: WebGLUniformLocation;
   unifViewProj: WebGLUniformLocation;
   unifColor: WebGLUniformLocation;
+  unifTime: WebGLUniformLocation;
+  unifPuffiness: WebGLUniformLocation;
+  unifPuffScale: WebGLUniformLocation;
+  unifOctaves: WebGLUniformLocation;
+  unifSky: WebGLUniformLocation;
+  unifDrawSky: WebGLUniformLocation;
 
   constructor(shaders: Array<Shader>) {
     this.prog = gl.createProgram();
@@ -48,6 +54,12 @@ class ShaderProgram {
     this.unifModelInvTr = gl.getUniformLocation(this.prog, "u_ModelInvTr");
     this.unifViewProj   = gl.getUniformLocation(this.prog, "u_ViewProj");
     this.unifColor      = gl.getUniformLocation(this.prog, "u_Color");
+    this.unifTime = gl.getUniformLocation(this.prog, "u_Time");
+    this.unifPuffiness = gl.getUniformLocation(this.prog, "u_Puffiness");
+    this.unifPuffScale = gl.getUniformLocation(this.prog, "u_PuffScale");
+    this.unifOctaves = gl.getUniformLocation(this.prog, "u_Octaves");
+    this.unifSky = gl.getUniformLocation(this.prog, "u_Sky");
+    this.unifDrawSky = gl.getUniformLocation(this.prog, "u_DrawSky");
   }
 
   use() {
@@ -83,6 +95,44 @@ class ShaderProgram {
     if (this.unifColor !== -1) {
       gl.uniform4fv(this.unifColor, color);
     }
+  }
+
+  setTime(time: number)
+  {
+    this.use();
+    gl.uniform1f(this.unifTime, time);
+  }
+
+  setPuffiness(puffiness: number)
+  {
+    this.use();
+    gl.uniform1f(this.unifPuffiness, puffiness);
+  }
+
+  setPuffScale(scale: number)
+  {
+    this.use();
+    gl.uniform1f(this.unifPuffScale, scale);
+  }
+
+  setOctaves(octaves: number)
+  {
+    this.use();
+    gl.uniform1i(this.unifOctaves, Math.round(octaves)); // u_Octaves is an int in the shader
+  }
+
+  setSkyTexture(texture: WebGLTexture)
+  {
+    this.use();
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.uniform1i(this.unifSky, 0);
+  }
+
+  setDrawSky(drawSky: boolean)
+  {
+    this.use();
+    gl.uniform1i(this.unifDrawSky, drawSky ? 1 : 0); // bool uniforms are set as ints
   }
 
   draw(d: Drawable) {
